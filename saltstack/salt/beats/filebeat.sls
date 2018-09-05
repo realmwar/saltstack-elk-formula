@@ -17,27 +17,60 @@ filebeat_user:
       - adm
       - root
 
+filebeat_apt_source:
+  file.managed:
+    - name: /etc/apt/sources.list.d/filebeat.list
+    - require:
+      - file: elastic_public_key
+    - contents: deb {{ salt['pillar.get']('elk:filebeat:apt_source') }} stable main
+
 filebeat_install:
   archive.extracted:
     - name: /opt
     - source: {{ salt['pillar.get']('elk:filebeat:source') }}
     - source_hash: {{ salt['pillar.get']('elk:filebeat:source_hash') }}
     - archive_format: tar
-    - tar_options: xf
+    - tar_options: xzvf
+    - user: root
+    - group: root
+    - if_missing: {{ salt['pillar.get']('elk:filebeat:dir') }}
+
+filebeat_install_1:
+  pkg.installed:
+    - name: filebeat
+    - refresh: True
     - user: filebeat
     - group: filebeat
     - if_missing: {{ salt['pillar.get']('elk:filebeat:dir') }}
 
+# {% if not salt['pillar.get']('elk:filebeat:dir') %}
+# filebeat_directory_create:
+#   file.directory:
+#     - name:  {{ salt['pillar.get']('elk:filebeat:dir') }}
+#     - user:  filebeat
+#     - group:  filebeat
+#     - makedirs: True
+#     - recurse:
+#         - user
+#         - group
+#         - mode
+# {% else %}
+#   cmd.run:
+#     - name: echo "Directory exists"
+# {% endif %}
+#
 # Vagrant is showing weird file permissions, run this check to fix:
-filebeat_check_permissions:
-    file.directory:
-    - name: {{ salt['pillar.get']('elk:filebeat:dir') }}
-    - user: filebeat
-    - group: filebeat
-    - recurse:
-        - user
-        - group
-        - mode
+# filebeat_check_permissions:
+#     file.directory:
+#     - name: {{ salt['pillar.get']('elk:filebeat:dir') }}
+#     - user: filebeat
+#     - group: filebeat
+#     - recurse:
+#         - user
+#         - group
+#         - mode
+    # - require:
+    #   - file: {{ salt['pillar.get']('elk:filebeat:dir') }}
 
 filebeat_symlink:
   file.symlink:
@@ -64,6 +97,7 @@ filebeat_init:
   file.managed:
     - name: /etc/init/filebeat.conf
     - source: salt://beats/files/filebeat/filebeat_upstart.conf
+
 
 filebeat_service:
   service.running:

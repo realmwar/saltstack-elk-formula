@@ -1,6 +1,6 @@
 openjdk_install:
   pkg.installed:
-    - name: openjdk-7-jre
+    - name: openjdk-8-jre
     - refresh: True
     - failhard: True
 

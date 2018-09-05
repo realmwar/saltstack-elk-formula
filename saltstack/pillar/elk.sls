@@ -37,17 +37,19 @@ elk:
       -----END PGP PUBLIC KEY BLOCK-----
 
   elasticsearch:
-    apt_source: https://artifacts.elastic.co/downloads/elasticsearch/elasticsearch-6.4.0.deb
+    apt_source: https://artifacts.elastic.co/packages/6.x/apt
 
   logstash:
-    apt_source: https://artifacts.elastic.co/downloads/logstash/logstash-6.4.0.deb
+    apt_source: https://artifacts.elastic.co/packages/6.x/apt
 
   kibana:
+    apt_source: https://artifacts.elastic.co/packages/6.x/apt
     source: https://artifacts.elastic.co/downloads/kibana/kibana-6.4.0-linux-x86_64.tar.gz
-    source_hash: sha1=b144c1864936b4d3504f9c2a9249b6d79a9f45ac
+    source_hash: sha512=ae0f6ede637bf373e44eb5711b5a07ce726bb72009d792c8e9a16d7eb32b2361cdda556a19c3f5fd50207320e86950217cf5e9a1a06607004d4b7f30d3dbb344
     dir: /opt/kibana-6.4.0-linux-x86_64
 
   filebeat:
+    apt_source: https://artifacts.elastic.co/packages/6.x/apt
     source: https://artifacts.elastic.co/downloads/beats/filebeat/filebeat-6.4.0-darwin-x86_64.tar.gz
-    source_hash: sha1=7186fe1d1b4dc6db6aa1073580345123e8ddae30
+    source_hash: sha512=4cde7b964a51985b052f3c649b734b28199c66f3a9500b160bf3cdfde3ea9415d42aaf0d15fb6fb343b3b508f53c0e1fffcf5fbc41f12f491d82f681075446b8
     dir: /opt/filebeat-6.4.0-darwin-x86_64
