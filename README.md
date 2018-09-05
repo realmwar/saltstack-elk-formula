@@ -61,7 +61,7 @@ For larger volumes of traffic/data, the formula will need to add in support for 
 
 ## Install Local (Vagrant)
 
-- `git clone https://github.com/rudijs/saltstack-elk-formula.git`
+- `git clone https://github.com/realmwar/saltstack-elk-formula.git`
 - `cd saltstack-elk-formula`
 - `vagrant up`
 - After some time all three servers will be up with Saltstack installed.
